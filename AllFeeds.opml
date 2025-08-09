@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<opml version="1.0">
+  <head>
+    <title>OPML RSS Feeds File</title>
+    <dateCreated>Fri, 8 Aug 2025 13:43:17 -0400</dateCreated>
+    <dateModified>Fri, 8 Aug 2025 13:43:17 -0400</dateModified>
+  </head>
+  <body>
+    <!-- AWS General Feeds -->
+    <outline text="AWS Architecture Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/architecture/feed/"/>
+    <outline text="AWS Business Productivity Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/business-productivity/feed/"/>
+    <outline text="AWS Cloud Financial Management" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/aws-cost-management/feed/"/>
+    <outline text="AWS Management &amp; Governance Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/mt/feed/"/>
+    <outline text="AWS Compute Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/compute/feed/"/>
+    <outline text="AWS Containers" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/containers/feed/"/>
+    <outline text="AWS Database Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/database/feed/"/>
+    <outline text="AWS Developer Tools Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/developer/feed/"/>
+    <outline text="AWS DevOps &amp; Developer Productivity Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/devops/feed/"/>
+    <outline text="AWS Enterprise Strategy Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/enterprise-strategy/feed/"/>
+    <outline text="AWS Industries Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/industries/feed/"/>
+    <outline text="AWS Infrastructure &amp; Automation" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/infrastructure-and-automation/feed/"/>
+    <outline text="AWS Marketplace Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/awsmarketplace/feed/"/>
+    <outline text="AWS Network &amp; Content Delivery Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/networking-and-content-delivery/feed/"/>
+    <outline text="AWS News Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/aws/feed/"/>
+    <outline text="AWS Open Source Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/opensource/feed/"/>
+    <outline text="AWS Partner Network (APN) Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/apn/feed/"/>
+    <outline text="AWS Public Sector Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/publicsector/feed/"/>
+    <outline text="AWS Security Bulletins" type="rss"
+    xmlUrl="https://aws.amazon.com/security/security-bulletins/rss/feed/"/>
+    <outline text="AWS Security, Identity &amp; Compliance Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/security/feed/"/>
+    <outline text="AWS Storage Blog" type="rss"
+    xmlUrl="https://aws.amazon.com/blogs/storage/feed/"/>
+    <outline text="AWS Training &amp; Certification Blog" type="rss" 
+    xmlUrl="https://aws.amazon.com/blogs/training-and-certification/feed/"/>
+    <!-- AWS Solution Specific Feeds -->
+    <outline text="Amazon Linux2 AMI Security Bulletins" type="rss"
+    xmlUrl="https://alas.aws.amazon.com/AL2/alas.rss"/>
+    <outline text="Amazon Linux 2022 Security Bulletins" type="rss"
+    xmlUrl="https://alas.aws.amazon.com/AL2022/alas.rss"/>
+    <outline text="AWS Landing Zone Accelerator Updates" type="rss"
+    xmlUrl="https://solutions-reference.s3.amazonaws.com/landing-zone-accelerator-on-aws/latest/rss.xml"/>
+    <!-- Kubernetes Feeds -->
+    <outline text="Kubernetes Blog" type="rss"
+    xmlUrl="https://kubernetes.io/feed.xml"/>
+    <outline text="Argo Project Blog" type="rss"
+    xmlUrl="https://blog.argoproj.io/feed"/>
+    <!-- Crossplane Feeds -->
+    <outline text="Crossplane Blog" type="rss"
+    xmlUrl="https://blog.crossplane.io/rss/"/>
+    <outline text="Upbound Status - Incident History" type="rss"
+    xmlUrl="https://status.upbound.io/history.rss"/>
+    <!-- Cyber Feeds -->
+    <outline text="CISA Cybersecurity Advisories" type="rss"
+    xmlUrl="https://www.cisa.gov/cybersecurity-advisories/all.xml"/>
+    <outline text="NIST Cybersecurity Insights" type="rss"
+    xmlUrl="https://www.nist.gov/blogs/cybersecurity-insights/rss.xml"/>
+    <outline text="SANS Internet Storm Center" type="rss"
+    xmlUrl="https://isc.sans.edu/rssfeed.xml"/>
+    <!-- Government of Canada Feeds -->
+    <outline text="CCCS Cyber Alerts &amp; Advisories" type="rss"
+    xmlUrl="https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&lang=en"/>
+  </body>
+</opml>
