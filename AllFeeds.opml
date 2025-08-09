@@ -77,6 +77,6 @@
     xmlUrl="https://isc.sans.edu/rssfeed.xml"/>
     <!-- Government of Canada Feeds -->
     <outline text="CCCS Cyber Alerts &amp; Advisories" type="rss"
-    xmlUrl="https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&lang=en"/>
+    xmlUrl="https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&amp;lang=en"/>
   </body>
 </opml>
