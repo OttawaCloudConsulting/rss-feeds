@@ -1,0 +1,114 @@
+name: RSS Feed Validation
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - '*.opml'
+      - '**/*.opml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - '*.opml'
+      - '**/*.opml'
+
+jobs:
+  validate-rss-feeds:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Make RSS test script executable
+      run: chmod +x rss-test.sh
+      
+    - name: Install required dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y curl perl
+        
+    - name: Find and validate OPML files
+      run: |
+        # Find all OPML files in the repository
+        OPML_FILES=$(find . -name "*.opml" -type f)
+        
+        if [ -z "$OPML_FILES" ]; then
+          echo "No OPML files found in the repository"
+          exit 0
+        fi
+        
+        echo "Found OPML files:"
+        echo "$OPML_FILES"
+        echo ""
+        
+        # Test each OPML file
+        EXIT_CODE=0
+        for opml_file in $OPML_FILES; do
+          echo "Testing OPML file: $opml_file"
+          echo "=================================="
+          
+          if ./rss-test.sh "$opml_file"; then
+            echo "✅ $opml_file validation passed"
+          else
+            echo "❌ $opml_file validation failed"
+            EXIT_CODE=1
+          fi
+          
+          echo ""
+          echo "Log file contents for $opml_file:"
+          LOG_FILE=$(basename "$opml_file" .opml)_test_results.log
+          if [ -f "$LOG_FILE" ]; then
+            cat "$LOG_FILE"
+          fi
+          echo ""
+          echo "=================================="
+          echo ""
+        done
+        
+        # Exit with error if any validation failed
+        exit $EXIT_CODE
+        
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: rss-validation-results
+        path: |
+          *_test_results.log
+        retention-days: 30
+        
+    - name: Comment on PR with results
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Find all log files
+          const logFiles = fs.readdirSync('.').filter(file => file.endsWith('_test_results.log'));
+          
+          if (logFiles.length === 0) {
+            return;
+          }
+          
+          let comment = '## RSS Feed Validation Results\n\n';
+          
+          for (const logFile of logFiles) {
+            const content = fs.readFileSync(logFile, 'utf8');
+            const opmlFile = logFile.replace('_test_results.log', '.opml');
+            
+            comment += `### Results for \`${opmlFile}\`\n\n`;
+            comment += '```\n';
+            comment += content;
+            comment += '\n```\n\n';
+          }
+          
+          // Post comment on PR
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
