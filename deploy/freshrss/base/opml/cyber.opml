@@ -10,7 +10,6 @@
   </head>
   <body>
     <outline text="Cyber" frss:opmlUrl="http://127.0.0.1/opml/cyber.opml">
-      <outline text="CISA Cybersecurity Advisories" type="rss" xmlUrl="https://www.cisa.gov/cybersecurity-advisories/all.xml"/>
       <outline text="NIST Cybersecurity Insights" type="rss" xmlUrl="https://www.nist.gov/blogs/cybersecurity-insights/rss.xml"/>
       <outline text="CCCS Cyber Alerts &amp; Advisories" type="rss" xmlUrl="https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&amp;lang=en"/>
     </outline>
