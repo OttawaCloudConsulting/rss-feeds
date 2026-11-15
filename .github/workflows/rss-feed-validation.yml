@@ -29,6 +29,11 @@ jobs:
         sudo apt-get install -y curl perl
         
     - name: Find and validate OPML files
+      env:
+        # Feeds that block GitHub-hosted runner IPs (HTTP 403 in CI, 200 elsewhere).
+        # Space-separated, exactly as written in the OPML. Local runs still test them.
+        RSS_TEST_SKIP_URLS: >-
+          https://www.cisa.gov/cybersecurity-advisories/all.xml
       run: |
         # Find all OPML files in the repository
         OPML_FILES=$(find . -name "*.opml" -type f)

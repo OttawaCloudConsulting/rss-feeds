@@ -4,6 +4,9 @@
 # Tests all RSS feed URLs from an OPML file for availability and validity
 # Usage: bash rss-test.sh [opml-file]
 #   If no file specified, will auto-detect single *.opml file in current directory
+# Environment:
+#   RSS_TEST_SKIP_URLS  Space-separated feed URLs (as written in the OPML) to skip, e.g. feeds
+#                       that block CI runner IPs. Skipped feeds are logged but not tested.
 
 set -euo pipefail
 
@@ -21,6 +24,7 @@ TOTAL_FEEDS=0
 VALID_FEEDS=0
 INVALID_FEEDS=0
 TIMEOUT_FEEDS=0
+SKIPPED_FEEDS=0
 
 #######################################
 # Display usage information
@@ -269,7 +273,19 @@ main() {
       if [[ -z "${name}" ]]; then
         name="Unknown Feed"
       fi
-      
+
+      if [[ " ${RSS_TEST_SKIP_URLS:-} " == *" ${url} "* ]]; then
+        echo -e "${BLUE}↷${NC} ${name} (skipped: RSS_TEST_SKIP_URLS)"
+        echo ""
+        {
+          echo "↷ SKIPPED: ${name}"
+          echo "  URL: ${url}"
+          echo ""
+        } >> "${LOG_FILE}"
+        SKIPPED_FEEDS=$((SKIPPED_FEEDS + 1))
+        continue
+      fi
+
       test_feed "${url}" "${name}"
       
       # Small delay to avoid overwhelming servers
@@ -285,6 +301,9 @@ main() {
   echo -e "Valid feeds: ${GREEN}${VALID_FEEDS}${NC}"
   echo -e "Invalid feeds: ${RED}${INVALID_FEEDS}${NC}"
   echo -e "Timeout/Failed: ${RED}${TIMEOUT_FEEDS}${NC}"
+  if [[ ${SKIPPED_FEEDS} -gt 0 ]]; then
+    echo "Skipped feeds: ${SKIPPED_FEEDS}"
+  fi
   echo ""
   
   # Calculate percentage
@@ -304,6 +323,9 @@ main() {
     echo "Valid feeds: ${VALID_FEEDS}"
     echo "Invalid feeds: ${INVALID_FEEDS}"
     echo "Timeout/Failed: ${TIMEOUT_FEEDS}"
+    if [[ ${SKIPPED_FEEDS} -gt 0 ]]; then
+      echo "Skipped feeds: ${SKIPPED_FEEDS}"
+    fi
     if [[ ${TOTAL_FEEDS} -gt 0 ]]; then
       echo "Success rate: ${success_rate}%"
     fi
