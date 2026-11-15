@@ -1,0 +1,29 @@
+# Generic FreshRSS base: one Deployment, SQLite on a PVC, anonymous reading.
+# Copy this directory into the application repo and own it there.
+# Add ../components/postgres-cnpg to use CloudNativePG instead of SQLite.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: freshrss
+    includeSelectors: true
+
+resources:
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+
+configMapGenerator:
+  # Global retention default for the admin user. Read once, when the user is created.
+  - name: freshrss-config
+    files:
+      - config-user.custom.php
+  # Feed groups served at http://127.0.0.1/opml/<file> inside the pod, for dynamic OPML categories.
+  # No hash suffix, so edits reach the mounted files without restarting the pod.
+  - name: freshrss-opml
+    files:
+      - opml/kubernetes.opml
+      - opml/cyber.opml
+    options:
+      disableNameSuffixHash: true

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+spec:
+  template:
+    spec:
+      containers:
+        - name: freshrss
+          env:
+            # Secret created by CNPG for the cluster's application user.
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: freshrss-postgresql-app
+                  key: password
+            # Until Postgres accepts connections the install fails and the container restarts;
+            # the install retries on each start until it succeeds.
+            - name: FRESHRSS_INSTALL
+              value: |-
+                --allow-anonymous
+                --default-user admin
+                --language en
+                --db-type pgsql
+                --db-host freshrss-postgresql-rw
+                --db-user freshrss
+                --db-password ${DB_PASSWORD}
+                --db-base freshrss

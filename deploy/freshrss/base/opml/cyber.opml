@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example feed group. Replace with the curated list for your deployment.
+  One file per group. The outer outline becomes a FreshRSS category that re-reads its feed list
+  from frss:opmlUrl, so set that URL to wherever this file is served (in-pod path below, or a raw URL).
+-->
+<opml version="2.0" xmlns:frss="https://freshrss.org/opml">
+  <head>
+    <title>Cyber</title>
+  </head>
+  <body>
+    <outline text="Cyber" frss:opmlUrl="http://127.0.0.1/opml/cyber.opml">
+      <outline text="CISA Cybersecurity Advisories" type="rss" xmlUrl="https://www.cisa.gov/cybersecurity-advisories/all.xml"/>
+      <outline text="NIST Cybersecurity Insights" type="rss" xmlUrl="https://www.nist.gov/blogs/cybersecurity-insights/rss.xml"/>
+      <outline text="CCCS Cyber Alerts &amp; Advisories" type="rss" xmlUrl="https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&amp;lang=en"/>
+    </outline>
+  </body>
+</opml>
