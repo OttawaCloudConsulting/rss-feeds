@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Example feed group. Replace with the curated list for your deployment.
+  One file per group. The outer outline becomes a FreshRSS category that re-reads its feed list
+  from frss:opmlUrl, so set that URL to wherever this file is served (in-pod path below, or a raw URL).
+-->
+<opml version="2.0" xmlns:frss="https://freshrss.org/opml">
+  <head>
+    <title>Kubernetes</title>
+  </head>
+  <body>
+    <outline text="Kubernetes" frss:opmlUrl="http://127.0.0.1/opml/kubernetes.opml">
+      <outline text="Kubernetes Blog" type="rss" xmlUrl="https://kubernetes.io/feed.xml"/>
+      <outline text="Argo Project Blog" type="rss" xmlUrl="https://blog.argoproj.io/feed"/>
+      <outline text="Crossplane Blog" type="rss" xmlUrl="https://blog.crossplane.io/rss/"/>
+    </outline>
+  </body>
+</opml>

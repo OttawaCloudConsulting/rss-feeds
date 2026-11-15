@@ -1,0 +1,11 @@
+# ClusterIP only. Expose it (LoadBalancer, Ingress, TLS) in the application repo.
+apiVersion: v1
+kind: Service
+metadata:
+  name: freshrss
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

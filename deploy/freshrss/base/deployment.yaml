@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+spec:
+  replicas: 1
+  # The data PVC is ReadWriteOnce, and FreshRSS is single-instance.
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: freshrss
+          image: docker.io/freshrss/freshrss:1.30.4
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: TZ
+              value: UTC
+            # Built-in cron: refresh feeds at these minutes past each hour.
+            - name: CRON_MIN
+              value: "7,37"
+            # Dynamic OPML categories fetch their feed list from this pod's own web server.
+            - name: INTERNAL_HOST_ALLOWLIST
+              value: "127.0.0.1:80"
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: freshrss-admin
+                  key: password
+            # FRESHRSS_INSTALL and FRESHRSS_USER run only on the first start (until data/config.php
+            # and the user exist). Changing them later has no effect on a running instance.
+            # The entrypoint shell-expands ${VAR} in these values.
+            - name: FRESHRSS_INSTALL
+              value: |-
+                --allow-anonymous
+                --default-user admin
+                --language en
+                --db-type sqlite
+            - name: FRESHRSS_USER
+              value: |-
+                --user admin
+                --password ${ADMIN_PASSWORD}
+                --language en
+                --no-default-feeds
+          volumeMounts:
+            - name: data
+              mountPath: /var/www/FreshRSS/data
+            - name: config
+              mountPath: /var/www/FreshRSS/data/config-user.custom.php
+              subPath: config-user.custom.php
+              readOnly: true
+            - name: opml
+              mountPath: /var/www/FreshRSS/p/opml
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 4
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: freshrss-data
+        - name: config
+          configMap:
+            name: freshrss-config
+        - name: opml
+          configMap:
+            name: freshrss-opml
